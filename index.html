@@ -1,181 +1,226 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>इंचानाळ महालक्ष्मी यात्रा २०२६</title>
-    <style>
-        :root {
-            --saffron: #FF9933;
-            --deep-orange: #FF4500;
-            --gold: #FFD700;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>इंचानाळ महालक्ष्मी यात्रा २०२६</title>
 
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%);
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-            touch-action: manipulation; /* मोबाईलवर झूम थांबवण्यासाठी */
-        }
+<style>
+:root {
+    --saffron: #FF9933;
+    --deep-orange: #FF4500;
+    --gold: #FFD700;
+}
 
-        .container {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 4px solid var(--saffron);
-            width: 90%;
-            max-width: 400px; /* PC साठी विड्थ */
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%);
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
 
-        .devi-img {
-            width: 180px;
-            max-width: 60%;
-            filter: drop-shadow(0 0 10px var(--saffron));
-            animation: deviFloat 3s infinite ease-in-out;
-        }
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: 4px solid var(--saffron);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
 
-        @keyframes deviFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+.devi-img {
+    width: 170px;
+    max-width: 60%;
+    filter: drop-shadow(0 0 10px var(--saffron));
+}
 
-        h1 {
-            color: var(--deep-orange);
-            font-size: 1.5rem;
-            margin: 15px 0;
-        }
+h1 {
+    color: var(--deep-orange);
+    font-size: 1.4rem;
+}
 
-        .btn-box {
-            margin-top: 30px;
-            height: 150px; /* मोबाईलवर फिरण्यासाठी जागा */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-        }
+.btn-box {
+    margin-top: 25px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
 
-        .btn {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            min-width: 120px;
-        }
+.btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
-        #yesBtn {
-            background: #28a745;
-            color: white;
-            z-index: 100;
-        }
+#yesBtn {
+    background: #28a745;
+    color: white;
+    transition: transform 0.2s;
+}
 
-        #noBtn {
-            background: var(--deep-orange);
-            color: white;
-            position: relative;
-            z-index: 50;
-        }
+#noBtn {
+    background: var(--deep-orange);
+    color: white;
+}
 
-        /* माहिती विंडो */
-        #infoPanel {
-            display: none;
-            text-align: left;
-        }
+/* ===== Invitation Card ===== */
 
-        .info-card {
-            background: #fff8e1;
-            padding: 15px;
-            border-radius: 15px;
-            border-left: 5px solid var(--gold);
-            margin-top: 15px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
+.card-wrapper {
+    perspective: 1200px;
+    margin-top: 20px;
+    display: none;
+}
 
-        /* मोबाईलसाठी छोटे बदल */
-        @media (max-width: 480px) {
-            h1 { font-size: 1.3rem; }
-            .devi-img { width: 150px; }
-        }
-    </style>
+.card-inner {
+    width: 100%;
+    height: 320px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+.card-wrapper.open .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    backface-visibility: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #fff8e1, #ffe082);
+    border: 4px solid gold;
+    animation: goldenGlow 2s infinite alternate;
+}
+
+@keyframes goldenGlow {
+    0% { box-shadow: 0 0 10px gold; }
+    100% { box-shadow: 0 0 25px orange; }
+}
+
+.card-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    text-align: center;
+}
+
+.jai {
+    color: var(--deep-orange);
+    margin-bottom: 10px;
+}
+
+@media(max-width:480px){
+    h1{font-size:1.2rem}
+    .devi-img{width:140px}
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container" id="mainCard">
-        <div id="askingArea">
-            <img src="Mahalaxmi Ambabai HD Wallpaper.jpeg" alt="महालक्ष्मी" class="devi-img">
-            <h1>🚩 इंचानाळ महालक्ष्मी यात्रा २०२६ 🚩</h1>
-            <p>५ वर्षांची प्रदीर्घ प्रतीक्षा संपली!<br>यात्रेला गावी येणार का?</p>
+<!-- 🔊 Background Music (NO autoplay) -->
+<audio id="bgMusic" loop>
+    <source src="your-music-file.mp3" type="audio/mpeg">
+</audio>
 
-            <div class="btn-box">
-                <button id="yesBtn" class="btn" onclick="showInfo()">हो, नक्कीच! 🙏</button>
-                <button id="noBtn" class="btn" onmouseover="moveNo()" ontouchstart="moveNo()">नाही</button>
-            </div>
-        </div>
+<div class="container">
 
-        <div id="infoPanel">
-            <img src="http://googleusercontent.com/image_collection/image_retrieval/14245352346406523230_0" style="width: 100px;" alt="महालक्ष्मी">
-            <h2 style="color: var(--deep-orange); margin: 5px 0;">॥ जय महालक्ष्मी ॥</h2>
-            
-            <div class="info-card">
-                <strong>श्री महालक्ष्मी देवी माहिती:</strong><br>
-                इंचानाळ गावची आई महालक्ष्मी हे जागृत देवस्थान आहे. दर ५ वर्षांनी भरणारी ही यात्रा एक मोठा लोकोत्सव असतो. 
-                <br><br>
-                यात्रेत देवीची भव्य मिरवणूक, पालखी सोहळा आणि पारंपारिक वाद्यांच्या गजरात गाव दुमदुमून जातो. भाविकांच्या नवसाला पावणारी अशी ही 'इंचानाळची आई' आहे.
-            </div>
-            
-            <p style="color: #28a745; font-weight: bold; margin-top: 15px;">तुमची उपस्थिती महत्त्वाची आहे! भेटूया यात्रेत! 🥁✨</p>
-        </div>
+<div id="askingArea">
+    <img src="" class="devi-img" alt="महालक्ष्मी">
+    <h1>🚩 इंचानाळ महालक्ष्मी यात्रा २०२६ 🚩</h1>
+    <p>५ वर्षांची प्रतीक्षा संपली!<br>यात्रेला गावी येणार का?</p>
+
+    <div class="btn-box">
+        <button id="yesBtn" class="btn" onclick="showCard()">हो, नक्कीच! 🙏</button>
+        <button id="noBtn" class="btn" onmouseover="moveNo()">नाही</button>
     </div>
+</div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
+<div class="card-wrapper" id="inviteCard">
+    <div class="card-inner">
+        
+        <div class="card-front">
+            <h2>🚩 आमंत्रण 🚩</h2>
+            <p>देवीचे पवित्र आमंत्रण उघडा</p>
+        </div>
 
-        function moveNo() {
-            // स्क्रीनची उंची आणि रुंदी मोजणे
-            const card = document.getElementById('mainCard');
-            const padding = 20;
-            
-            // मोबाईल आणि पीसीसाठी सुरक्षित अंतर ठेवणे जेणेकरून बटण स्क्रीनच्या बाहेर जाणार नाही
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+        <div class="card-back">
+            <h2 class="jai">॥ जय महालक्ष्मी ॥</h2>
+            <p>
+                श्री महालक्ष्मी देवीची भव्य यात्रा  
+                ५ वर्षांनी येणारा लोकोत्सव  
+                <br><br>
+                देवीची मिरवणूक, पालखी सोहळा  
+                आणि भक्तांचा उत्साह  
+                <br><br>
+                🙏 आपली उपस्थिती अनिवार्य आहे 🙏
+            </p>
+        </div>
 
-            // 'हो' बटण मोठे करणे (प्रोत्साहन देण्यासाठी)
-            let currentScale = yesBtn.style.transform || "scale(1)";
-            let currentVal = parseFloat(currentScale.replace("scale(", "").replace(")", "")) || 1;
-            if (currentVal < 1.8) {
-                yesBtn.style.transform = `scale(${currentVal + 0.1})`;
-            }
-        }
+    </div>
+</div>
 
-        function showInfo() {
-            document.getElementById('askingArea').style.display = 'none';
-            document.getElementById('infoPanel').style.display = 'block';
-            document.body.style.background = "#FF9933";
-            alert("नक्की या! इंचानाळची आई महालक्ष्मी तुम्हाला आशीर्वाद देवो! 🙏");
-        }
-    </script>
+</div>
+
+<script>
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const music = document.getElementById('bgMusic');
+
+/* 🔊 Play music on first click anywhere */
+document.addEventListener("click", function() {
+    music.play().catch(()=>{});
+}, { once: true });
+
+function moveNo() {
+    const padding = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = randomX + 'px';
+    noBtn.style.top = randomY + 'px';
+
+    let currentScale = yesBtn.style.transform || "scale(1)";
+    let currentVal = parseFloat(currentScale.replace("scale(", "").replace(")", "")) || 1;
+    if(currentVal < 1.8){
+        yesBtn.style.transform = `scale(${currentVal + 0.1})`;
+    }
+}
+
+function showCard(){
+    document.getElementById('askingArea').style.display='none';
+    const card=document.getElementById('inviteCard');
+    card.style.display='block';
+    setTimeout(()=>{card.classList.add('open');},300);
+}
+</script>
+
 </body>
 </html>
