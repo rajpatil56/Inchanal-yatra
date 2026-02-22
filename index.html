@@ -1,226 +1,1127 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="mr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>इंचानाळ महालक्ष्मी यात्रा २०२६</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌺 इंचानाळ महालक्ष्मी यात्रा २०२६</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:wght@400&family=Yatra+One&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-:root {
-    --saffron: #FF9933;
-    --deep-orange: #FF4500;
-    --gold: #FFD700;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            min-height: 100vh;
+            font-family: 'Cinzel', serif;
+            background: radial-gradient(circle at center, #fffbeb, #fef3c7, #fde68a);
+        }
 
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%);
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
 
-.container {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    border: 4px solid var(--saffron);
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-.devi-img {
-    width: 170px;
-    max-width: 60%;
-    filter: drop-shadow(0 0 10px var(--saffron));
-}
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-h1 {
-    color: var(--deep-orange);
-    font-size: 1.4rem;
-}
+        #butterfly-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-.btn-box {
-    margin-top: 25px;
-    height: 140px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-}
+        .invitation-page {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            z-index: 10;
+        }
 
-.btn {
-    padding: 12px 30px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+        .instruction-text {
+            position: fixed;
+            bottom: 32px;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
+            z-index: 50;
+            transition: opacity 0.5s ease;
+        }
 
-#yesBtn {
-    background: #28a745;
-    color: white;
-    transition: transform 0.2s;
-}
+        .instruction-text p {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            color: #78350f;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            font-weight: bold;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 9999px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            animation: pulseGlow 2s infinite;
+        }
 
-#noBtn {
-    background: var(--deep-orange);
-    color: white;
-}
+        @media (min-width: 768px) {
+            .instruction-text p { font-size: 18px; }
+        }
 
-/* ===== Invitation Card ===== */
+        .instruction-hidden { opacity: 0 !important; }
 
-.card-wrapper {
-    perspective: 1200px;
-    margin-top: 20px;
-    display: none;
-}
+        .envelope-wrapper {
+            position: relative;
+            width: min(92vw, 520px);
+            height: min(62vw, 340px);
+            min-width: 300px;
+            min-height: 200px;
+            transform-style: preserve-3d;
+            perspective: 1500px;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
 
-.card-inner {
-    width: 100%;
-    height: 320px;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 1s;
-}
+        .envelope-wrapper.open {
+            transform: translateY(100px);
+        }
 
-.card-wrapper.open .card-inner {
-    transform: rotateY(180deg);
-}
+        .envelope-back {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 8px;
+            background: #fef3c7;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
 
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    backface-visibility: hidden;
-    padding: 20px;
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #fff8e1, #ffe082);
-    border: 4px solid gold;
-    animation: goldenGlow 2s infinite alternate;
-}
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: #fffef7;
+            border-radius: 4px;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 12px;
+            color: #78350f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+        }
 
-@keyframes goldenGlow {
-    0% { box-shadow: 0 0 10px gold; }
-    100% { box-shadow: 0 0 25px orange; }
-}
+        .envelope-wrapper.open .letter {
+            transform: translateY(-280px);
+            z-index: 25;
+            transition-delay: 0.4s;
+        }
 
-.card-front {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
+        .letter-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease 0.8s, transform 1s ease 0.8s;
+        }
 
-.card-back {
-    transform: rotateY(180deg);
-    text-align: center;
-}
+        .envelope-wrapper.open .letter-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.jai {
-    color: var(--deep-orange);
-    margin-bottom: 10px;
-}
+        .letter-border {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8px;
+            border: 3px solid transparent;
+            border-image: linear-gradient(135deg, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
+            border-image-slice: 1;
+            background: linear-gradient(180deg, #fffef7 0%, #fefce8 50%, #fffef7 100%);
+        }
 
-@media(max-width:480px){
-    h1{font-size:1.2rem}
-    .devi-img{width:140px}
-}
-</style>
+        @media (min-width: 768px) {
+            .letter-border { padding: 20px; }
+        }
+
+        .corner-ornament {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.6;
+        }
+        .corner-ornament.top-left { top: 4px; left: 8px; }
+        .corner-ornament.top-right { top: 4px; right: 8px; }
+        .corner-ornament.bottom-left { bottom: 4px; left: 8px; }
+        .corner-ornament.bottom-right { bottom: 4px; right: 8px; }
+
+        .letter-prayer { font-size: 24px; margin-bottom: 4px; }
+
+        .letter-ganesh {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 9px;
+            color: #92400e;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        @media (min-width: 768px) {
+            .letter-ganesh { font-size: 12px; }
+            .letter-prayer { font-size: 30px; }
+        }
+
+        .letter-title {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.6;
+            color: #b45309;
+        }
+
+        @media (min-width: 768px) {
+            .letter-title { font-size: 24px; }
+        }
+
+        .letter-divider {
+            width: 80px;
+            height: 2px;
+            margin: 6px 0;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, transparent, #d97706, transparent);
+        }
+
+        .letter-invitation {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 10px;
+            line-height: 1.6;
+            color: #78350f;
+        }
+
+        @media (min-width: 768px) {
+            .letter-invitation { font-size: 14px; }
+        }
+
+        .letter-date-section {
+            margin-top: 8px;
+            font-family: 'Tiro Devanagari Marathi', serif;
+            color: #92400e;
+        }
+
+        .letter-date-main { font-weight: bold; font-size: 11px; }
+        .letter-date-time { font-size: 9px; }
+
+        @media (min-width: 768px) {
+            .letter-date-main { font-size: 16px; }
+            .letter-date-time { font-size: 12px; }
+        }
+
+        .letter-venue {
+            margin-top: 4px;
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 10px;
+            font-weight: bold;
+            color: #92400e;
+        }
+
+        @media (min-width: 768px) {
+            .letter-venue { font-size: 14px; }
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 20;
+            clip-path: polygon(0 100%, 100% 100%, 100% 35%, 50% 55%, 0 35%);
+            background: linear-gradient(180deg, #fde68a 0%, #fbbf24 100%);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .pocket-trim {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 21;
+            clip-path: polygon(0 100%, 100% 100%, 100% 35%, 100% 36%, 50% 56%, 0 36%, 0 35%);
+            background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #92400e 100%);
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 30;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            clip-path: polygon(0 35%, 50% 55%, 100% 35%, 100% 0, 0 0);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .flap-trim {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 31;
+            background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #92400e 100%);
+            clip-path: polygon(0 35%, 50% 55%, 100% 35%, 100% 34%, 50% 54%, 0 34%);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .envelope-wrapper.open .flap-trim {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .ribbon-wrapper {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 40;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .ribbon-wrapper.untied {
+            opacity: 0;
+            transform: scale(1.5);
+            pointer-events: none;
+        }
+
+        .ribbon-wrapper:hover .ribbon-bow-container {
+            transform: scale(1.05);
+        }
+
+        .ribbon-vertical {
+            position: absolute;
+            width: 38px;
+            height: 100%;
+            background: linear-gradient(90deg, #c2410c, #ea580c 15%, #fb923c 50%, #ea580c 85%, #c2410c);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 41;
+        }
+
+        .ribbon-bow-container {
+            position: relative;
+            width: 160px;
+            height: 120px;
+            z-index: 42;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .bow-tail {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            z-index: 40;
+        }
+        .bow-tail.left {
+            bottom: -20px;
+            left: 35px;
+            background: linear-gradient(180deg, #c2410c, #ea580c 30%, #fb923c);
+            transform: rotate(20deg) skewX(10deg);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+        .bow-tail.right {
+            bottom: -20px;
+            right: 35px;
+            background: linear-gradient(180deg, #c2410c, #ea580c 30%, #fb923c);
+            transform: rotate(-20deg) skewX(-10deg);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+
+        .bow-loop {
+            position: absolute;
+            top: 20px;
+            width: 70px;
+            height: 60px;
+        }
+        .bow-loop.left {
+            left: 10px;
+            transform: rotate(-10deg);
+            border-radius: 50px 20px 20px 50px;
+            background: radial-gradient(circle at 80% 50%, #fb923c, #ea580c);
+        }
+        .bow-loop.right {
+            right: 10px;
+            transform: rotate(10deg);
+            border-radius: 20px 50px 50px 20px;
+            background: radial-gradient(circle at 20% 50%, #fb923c, #ea580c);
+        }
+
+        .bow-knot {
+            position: absolute;
+            width: 25px;
+            height: 30px;
+            background: linear-gradient(to right, #c2410c, #fb923c, #c2410c);
+            border-radius: 8px;
+            z-index: 45;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .rsvp-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 60;
+            display: none;
+        }
+
+        .rsvp-overlay.show { display: block; }
+
+        .rsvp-backdrop {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .rsvp-center {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideUp 0.6s ease;
+        }
+
+        .rsvp-card {
+            background: linear-gradient(180deg, #fffef7 0%, #fefce8 100%);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            padding: 24px;
+            margin: 16px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            max-width: 400px;
+            width: 90%;
+            border: 3px solid #fbbf24;
+        }
+
+        @media (min-width: 768px) {
+            .rsvp-card { padding: 40px; }
+        }
+
+        .rsvp-icon { font-size: 30px; margin-bottom: 8px; }
+
+        .rsvp-heading {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            line-height: 1.6;
+            color: #92400e;
+        }
+
+        @media (min-width: 768px) {
+            .rsvp-heading { font-size: 20px; }
+        }
+
+        .rsvp-subtitle {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 14px;
+            color: #78350f;
+            margin-bottom: 8px;
+        }
+
+        .rsvp-info {
+            font-size: 12px;
+            color: #a16207;
+            margin-bottom: 24px;
+        }
+
+        .rsvp-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            min-height: 60px;
+            position: relative;
+        }
+
+        .btn-accept {
+            padding: 12px 24px;
+            border-radius: 9999px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+            font-family: 'Tiro Devanagari Marathi', serif;
+            min-width: 130px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-accept:hover {
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            transform: scale(1.05);
+        }
+
+        .btn-accept:active { transform: scale(0.95); }
+
+        @media (min-width: 768px) {
+            .btn-accept { font-size: 18px; }
+        }
+
+        .btn-decline {
+            padding: 12px 24px;
+            border-radius: 9999px;
+            background: #e5e7eb;
+            color: #6b7280;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            font-family: 'Tiro Devanagari Marathi', serif;
+            min-width: 120px;
+            transition: left 0.25s ease, top 0.25s ease, background 0.3s ease;
+            z-index: 100;
+        }
+
+        @media (min-width: 768px) {
+            .btn-decline { font-size: 18px; }
+        }
+
+        .rsvp-hint {
+            margin-top: 16px;
+            font-size: 12px;
+            font-style: italic;
+            color: #b45309;
+        }
+
+        .details-page {
+            position: relative;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 16px;
+            z-index: 10;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .details-page.show { display: flex; }
+
+        .details-card {
+            background: linear-gradient(180deg, #fffef7 0%, #fefce8 100%);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+            max-width: 448px;
+            width: 100%;
+            border: 3px solid #fbbf24;
+            animation: slideUp 0.8s ease;
+        }
+
+        .details-header {
+            padding: 24px 16px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #fef3c7, #fde68a, #fbbf24);
+        }
+
+        .details-header .corner { position: absolute; top: 8px; font-size: 20px; opacity: 0.7; }
+        .details-header .corner.left { left: 12px; }
+        .details-header .corner.right { right: 12px; }
+
+        .details-header .prayer-icon { font-size: 36px; margin-bottom: 8px; }
+
+        .details-header h1 {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: #78350f;
+        }
+
+        @media (min-width: 768px) {
+            .details-header h1 { font-size: 24px; }
+        }
+
+        .details-header .sub-text {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 14px;
+            margin-top: 4px;
+            color: #92400e;
+        }
+
+        .details-header .gold-divider {
+            width: 96px;
+            height: 4px;
+            margin: 12px auto 0;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, transparent, #92400e, transparent);
+        }
+
+        .details-content { padding: 20px; }
+
+        @media (min-width: 768px) {
+            .details-content { padding: 24px; }
+        }
+
+        .details-content > * + * { margin-top: 16px; }
+
+        .welcome-box {
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 1px dashed #fbbf24;
+        }
+
+        .welcome-box p {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #92400e;
+        }
+
+        @media (min-width: 768px) {
+            .welcome-box p { font-size: 18px; }
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 12px;
+            background: #fefce8;
+        }
+
+        .info-row .info-icon { font-size: 24px; margin-top: 2px; flex-shrink: 0; }
+
+        .info-row .info-label {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #78350f;
+        }
+
+        .info-row .info-text {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 14px;
+            color: #92400e;
+        }
+
+        .info-row .info-text > * + * { margin-top: 4px; }
+        .info-row .info-text strong { font-weight: bold; }
+
+        .info-row .info-divider {
+            width: 100%;
+            height: 1px;
+            margin: 4px 0;
+            background: #fde68a;
+        }
+
+        .info-row .venue-name {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #b45309;
+        }
+
+        .program-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 14px;
+            color: #92400e;
+        }
+
+        .program-item + .program-item { margin-top: 8px; }
+        .program-item .prog-icon { font-size: 18px; }
+        .program-item .prog-text { font-weight: 600; }
+
+        .blessing-box {
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 2px solid #fde68a;
+        }
+
+        .blessing-box .blessing-icon { font-size: 24px; margin-bottom: 4px; }
+
+        .blessing-box p {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 14px;
+            font-style: italic;
+            line-height: 1.6;
+            color: #92400e;
+        }
+
+        .blessing-box .blessing-emojis {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 8px;
+            font-size: 18px;
+        }
+
+        .back-btn-container { text-align: center; padding-top: 8px; }
+
+        .btn-back {
+            padding: 10px 24px;
+            border-radius: 9999px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+            font-family: 'Tiro Devanagari Marathi', serif;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            transform: scale(1.05);
+        }
+
+        .btn-back:active { transform: scale(0.95); }
+
+        .details-footer {
+            padding: 12px;
+            text-align: center;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+
+        .details-footer p {
+            font-family: 'Tiro Devanagari Marathi', serif;
+            font-size: 12px;
+            color: #92400e;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- 🔊 Background Music (NO autoplay) -->
-<audio id="bgMusic" loop>
-    <source src="videoplayback-1_4ftAQZB9.mp3" type="audio/mpeg">
-</audio>
+    <canvas id="butterfly-canvas"></canvas>
 
-<div class="container">
-
-<div id="askingArea">
-    <img src="today-pooja (1).jpg" class="devi-img" alt="महालक्ष्मी">
-    <h1>🚩 इंचानाळ महालक्ष्मी यात्रा २०२६ 🚩</h1>
-    <p>५ वर्षांची प्रतीक्षा संपली!<br>यात्रेला गावी येणार का?</p>
-
-    <div class="btn-box">
-        <button id="yesBtn" class="btn" onclick="showCard()">हो, नक्कीच! 🙏</button>
-        <button id="noBtn" class="btn" onmouseover="moveNo()">नाही</button>
-    </div>
-</div>
-
-<div class="card-wrapper" id="inviteCard">
-    <div class="card-inner">
-        
-        <div class="card-front">
-            <h2>🚩 आमंत्रण 🚩</h2>
-            <p>देवीचे पवित्र आमंत्रण उघडा</p>
+    <div class="invitation-page" id="invitationPage">
+        <div class="instruction-text" id="instructionText">
+            <p>🌺 रिबन वर टॅप करा 🌺</p>
         </div>
 
-        <div class="card-back">
-            <h2 class="jai">॥ जय महालक्ष्मी ॥</h2>
-            <p>
-                श्री महालक्ष्मी देवीची भव्य यात्रा  
-                ५ वर्षांनी येणारा लोकोत्सव  
-                <br><br>
-                देवीची मिरवणूक, पालखी सोहळा  
-                आणि भक्तांचा उत्साह  
-                <br><br>
-                🙏 आपली उपस्थिती अनिवार्य आहे 🙏
-            </p>
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope-back"></div>
+
+            <div class="letter">
+                <div class="letter-content">
+                    <div class="letter-border">
+                        <div class="corner-ornament top-left">🌺</div>
+                        <div class="corner-ornament top-right">🌺</div>
+                        <div class="letter-prayer">🙏</div>
+                        <p class="letter-ganesh">॥ श्री गणेशाय नमः ॥</p>
+                        <h2 class="letter-title">🌺 श्री महालक्ष्मी देवीची यात्रा 🌺</h2>
+                        <div class="letter-divider"></div>
+                        <p class="letter-invitation">
+                            आपण सहकुटुंब यावे,<br/>
+                            अशी आमची विनंती आहे.
+                        </p>
+                        <div class="letter-date-section">
+                            <p class="letter-date-main">📅 मंगळवार दि. 10-03-2026</p>
+                            <p class="letter-date-time">रात्री 10 नंतर</p>
+                        </div>
+                        <div class="letter-venue">📍 स्थळ: इंचानाळ</div>
+                        <div class="corner-ornament bottom-left">🪔</div>
+                        <div class="corner-ornament bottom-right">🪔</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-pocket"></div>
+            <div class="pocket-trim"></div>
+            <div class="envelope-flap"></div>
+            <div class="flap-trim"></div>
+
+            <div class="ribbon-wrapper" id="ribbonBtn">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-bow-container">
+                    <div class="bow-tail left"></div>
+                    <div class="bow-tail right"></div>
+                    <div class="bow-loop left"></div>
+                    <div class="bow-loop right"></div>
+                    <div class="bow-knot"></div>
+                </div>
+            </div>
         </div>
-
     </div>
-</div>
 
-</div>
+    <div class="rsvp-overlay" id="rsvpModal">
+        <div class="rsvp-backdrop"></div>
+        <div class="rsvp-center">
+            <div class="rsvp-card">
+                <div class="rsvp-icon">🪔</div>
+                <h3 class="rsvp-heading">
+                    आपण सहकुटुंब उपस्थित राहावे,<br/>
+                    ही नम्र विनंती.
+                </h3>
+                <p class="rsvp-subtitle">श्री महालक्ष्मी देवीच्या यात्रेला</p>
+                <p class="rsvp-info">📍 इंचानाळ &nbsp;|&nbsp; 📅 10-03-2026</p>
+                <div class="rsvp-buttons">
+                    <button class="btn-accept" id="btnAccept">हो येतोय! 🎉</button>
+                    <button class="btn-decline" id="btnDecline">नाही 😢</button>
+                </div>
+                <p class="rsvp-hint">( "नाही" बटन दाबून बघा 😄 )</p>
+            </div>
+        </div>
+    </div>
 
-<script>
-const noBtn = document.getElementById('noBtn');
-const yesBtn = document.getElementById('yesBtn');
-const music = document.getElementById('bgMusic');
+    <div class="details-page" id="detailsPage">
+        <div class="details-card">
+            <div class="details-header">
+                <div class="corner left">🌺</div>
+                <div class="corner right">🌺</div>
+                <div class="prayer-icon">🙏</div>
+                <h1>श्री महालक्ष्मी देवीची यात्रा</h1>
+                <p class="sub-text">॥ श्री गणेशाय नमः ॥</p>
+                <div class="gold-divider"></div>
+            </div>
+            <div class="details-content">
+                <div class="welcome-box">
+                    <p>आपण सहकुटुंब यावे,<br/>अशी आमची विनंती आहे.</p>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📅</div>
+                    <div>
+                        <p class="info-label">दिनांक व वेळ</p>
+                        <div class="info-text">
+                            <p><strong>मंगळवार</strong> दिनांक <strong>10-03-2026</strong> रोजी</p>
+                            <p>रात्री 10 नंतर</p>
+                            <div class="info-divider"></div>
+                            <p><strong>बुधवार</strong> दिनांक <strong>11-03-2026</strong> रोजी</p>
+                            <p>दुपारी 12 नंतर</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div>
+                        <p class="info-label">स्थळ</p>
+                        <p class="venue-name">इंचानाळ</p>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">🪔</div>
+                    <div>
+                        <p class="info-label">कार्यक्रम</p>
+                        <div class="info-text">
+                            <div class="program-item">
+                                <span class="prog-icon">🌼</span>
+                                <span class="prog-text">श्री लक्ष्मी खेळवणे</span>
+                            </div>
+                            <div class="program-item">
+                                <span class="prog-icon">🍽️</span>
+                                <span class="prog-text">स्नेहभोजन</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blessing-box">
+                    <div class="blessing-icon">🌺</div>
+                    <p>"तुमच्या उपस्थितीने आमचा आनंद<br/>द्विगुणित होईल"</p>
+                    <div class="blessing-emojis">
+                        <span>🙏</span>
+                        <span>🪔</span>
+                        <span>🙏</span>
+                    </div>
+                </div>
+                <div class="back-btn-container">
+                    <button class="btn-back" id="btnBack">← मागे जा</button>
+                </div>
+            </div>
+            <div class="details-footer">
+                <p>🙏 कृपया वेळेवर उपस्थित रहा 🙏</p>
+            </div>
+        </div>
+    </div>
 
-/* 🔊 Play music on first click anywhere */
-document.addEventListener("click", function() {
-    music.play().catch(()=>{});
-}, { once: true });
+    <script>
+        var BUTTERFLY_PALETTES = [
+            { c1: "#f97316", c2: "#fbbf24" },
+            { c1: "#ef4444", c2: "#fb923c" },
+            { c1: "#eab308", c2: "#fde68a" },
+            { c1: "#c084fc", c2: "#e9d5ff" },
+            { c1: "#f472b6", c2: "#fda4af" },
+            { c1: "#2dd4bf", c2: "#a7f3d0" },
+            { c1: "#3b82f6", c2: "#93c5fd" },
+            { c1: "#ec4899", c2: "#f9a8d4" },
+            { c1: "#f59e0b", c2: "#fcd34d" },
+            { c1: "#10b981", c2: "#6ee7b7" },
+            { c1: "#8b5cf6", c2: "#c4b5fd" },
+            { c1: "#e11d48", c2: "#fda4af" }
+        ];
 
-function moveNo() {
-    const padding = 20;
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+        var canvas = document.getElementById('butterfly-canvas');
+        var ctx = canvas.getContext('2d');
 
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-    noBtn.style.position = 'fixed';
-    noBtn.style.left = randomX + 'px';
-    noBtn.style.top = randomY + 'px';
+        var count = Math.min(18, Math.max(10, Math.floor(window.innerWidth / 80)));
+        var butterflies = [];
 
-    let currentScale = yesBtn.style.transform || "scale(1)";
-    let currentVal = parseFloat(currentScale.replace("scale(", "").replace(")", "")) || 1;
-    if(currentVal < 1.8){
-        yesBtn.style.transform = `scale(${currentVal + 0.1})`;
-    }
-}
+        for (var i = 0; i < count; i++) {
+            var palette = BUTTERFLY_PALETTES[i % BUTTERFLY_PALETTES.length];
+            butterflies.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                size: Math.random() * 14 + 12,
+                color1: palette.c1,
+                color2: palette.c2,
+                wingPhase: Math.random() * Math.PI * 2,
+                wingSpeed: Math.random() * 0.08 + 0.06,
+                angle: Math.random() * Math.PI * 2,
+                targetX: Math.random() * window.innerWidth,
+                targetY: Math.random() * window.innerHeight
+            });
+        }
 
-function showCard(){
-    document.getElementById('askingArea').style.display='none';
-    const card=document.getElementById('inviteCard');
-    card.style.display='block';
-    setTimeout(()=>{card.classList.add('open');},300);
-}
-</script>
+        function drawButterfly(b, time) {
+            var wingFlap = Math.sin(time * b.wingSpeed * 60 + b.wingPhase) * 0.85;
+            ctx.save();
+            ctx.translate(b.x, b.y);
+            ctx.rotate(b.angle);
+            ctx.globalAlpha = 0.88;
 
+            ctx.save();
+            ctx.scale(1, wingFlap);
+            ctx.beginPath();
+            ctx.ellipse(-b.size * 0.4, 0, b.size * 0.85, b.size * 0.55, -0.3, 0, Math.PI * 2);
+            var gLeft = ctx.createRadialGradient(-b.size * 0.5, 0, 0, -b.size * 0.4, 0, b.size * 0.85);
+            gLeft.addColorStop(0, b.color2);
+            gLeft.addColorStop(0.6, b.color1);
+            gLeft.addColorStop(1, b.color1 + "88");
+            ctx.fillStyle = gLeft;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(-b.size * 0.55, 0, b.size * 0.25, b.size * 0.15, -0.3, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255,255,255,0.5)";
+            ctx.fill();
+            ctx.restore();
+
+            ctx.save();
+            ctx.scale(1, wingFlap);
+            ctx.beginPath();
+            ctx.ellipse(b.size * 0.4, 0, b.size * 0.85, b.size * 0.55, 0.3, 0, Math.PI * 2);
+            var gRight = ctx.createRadialGradient(b.size * 0.5, 0, 0, b.size * 0.4, 0, b.size * 0.85);
+            gRight.addColorStop(0, b.color2);
+            gRight.addColorStop(0.6, b.color1);
+            gRight.addColorStop(1, b.color1 + "88");
+            ctx.fillStyle = gRight;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(b.size * 0.55, 0, b.size * 0.25, b.size * 0.15, 0.3, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255,255,255,0.5)";
+            ctx.fill();
+            ctx.restore();
+
+            ctx.save();
+            ctx.scale(1, wingFlap * 0.9);
+            ctx.beginPath();
+            ctx.ellipse(-b.size * 0.3, b.size * 0.3, b.size * 0.55, b.size * 0.4, -0.5, 0, Math.PI * 2);
+            ctx.fillStyle = b.color1 + "cc";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(b.size * 0.3, b.size * 0.3, b.size * 0.55, b.size * 0.4, 0.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            ctx.globalAlpha = 1;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, b.size * 0.07, b.size * 0.4, 0, 0, Math.PI * 2);
+            ctx.fillStyle = "#1a1a2e";
+            ctx.fill();
+
+            ctx.strokeStyle = "#1a1a2e";
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(0, -b.size * 0.35);
+            ctx.quadraticCurveTo(-b.size * 0.3, -b.size * 0.7, -b.size * 0.4, -b.size * 0.8);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, -b.size * 0.35);
+            ctx.quadraticCurveTo(b.size * 0.3, -b.size * 0.7, b.size * 0.4, -b.size * 0.8);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(-b.size * 0.4, -b.size * 0.8, 2.5, 0, Math.PI * 2);
+            ctx.arc(b.size * 0.4, -b.size * 0.8, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = b.color1;
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        var lastTime = 0;
+        function animate(time) {
+            var dt = Math.min((time - lastTime) / 16, 3);
+            lastTime = time;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            butterflies.forEach(function(b) {
+                if (Math.random() < 0.006) {
+                    b.targetX = Math.random() * canvas.width;
+                    b.targetY = Math.random() * canvas.height;
+                }
+                var dx = b.targetX - b.x;
+                var dy = b.targetY - b.y;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist > 5) {
+                    b.vx += (dx / dist) * 0.04 * dt;
+                    b.vy += (dy / dist) * 0.04 * dt;
+                }
+                b.vx += (Math.random() - 0.5) * 0.12 * dt;
+                b.vy += (Math.random() - 0.5) * 0.12 * dt;
+                var speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+                var maxSpeed = 1.8;
+                if (speed > maxSpeed) {
+                    b.vx = (b.vx / speed) * maxSpeed;
+                    b.vy = (b.vy / speed) * maxSpeed;
+                }
+                b.x += b.vx * dt;
+                b.y += b.vy * dt;
+                if (speed > 0.3) {
+                    var targetAngle = Math.atan2(b.vy, b.vx) + Math.PI / 2;
+                    var angleDiff = targetAngle - b.angle;
+                    while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+                    while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+                    b.angle += angleDiff * 0.05 * dt;
+                }
+                var margin = 60;
+                if (b.x < -margin) b.x = canvas.width + margin;
+                if (b.x > canvas.width + margin) b.x = -margin;
+                if (b.y < -margin) b.y = canvas.height + margin;
+                if (b.y > canvas.height + margin) b.y = -margin;
+                drawButterfly(b, time / 1000);
+            });
+
+            requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+
+        // ===== ENVELOPE INTERACTION =====
+        var envelope = document.getElementById('envelope');
+        var ribbonBtn = document.getElementById('ribbonBtn');
+        var instructionText = document.getElementById('instructionText');
+        var rsvpModal = document.getElementById('rsvpModal');
+        var btnAccept = document.getElementById('btnAccept');
+        var btnDecline = document.getElementById('btnDecline');
+        var invitationPage = document.getElementById('invitationPage');
+        var detailsPage = document.getElementById('detailsPage');
+        var btnBack = document.getElementById('btnBack');
+
+        var isOpened = false;
+
+        ribbonBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isOpened) return;
+            ribbonBtn.classList.add('untied');
+            instructionText.classList.add('instruction-hidden');
+            setTimeout(function() {
+                envelope.classList.add('open');
+                isOpened = true;
+                setTimeout(function() {
+                    rsvpModal.classList.add('show');
+                }, 1400);
+            }, 600);
+        });
+
+        btnAccept.addEventListener('click', function() {
+            rsvpModal.classList.remove('show');
+            invitationPage.style.display = 'none';
+            detailsPage.classList.add('show');
+        });
+
+        function moveNahiButton() {
+            var btnWidth = 140;
+            var btnHeight = 50;
+            var padding = 20;
+            var maxX = window.innerWidth - btnWidth - padding;
+            var maxY = window.innerHeight - btnHeight - padding;
+            var newX = Math.max(padding, Math.random() * maxX);
+            var newY = Math.max(padding, Math.random() * maxY);
+            btnDecline.style.position = 'fixed';
+            btnDecline.style.left = newX + 'px';
+            btnDecline.style.top = newY + 'px';
+        }
+
+        btnDecline.addEventListener('mouseenter', moveNahiButton);
+        btnDecline.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            moveNahiButton();
+        });
+
+        btnBack.addEventListener('click', function() {
+            detailsPage.classList.remove('show');
+            invitationPage.style.display = '';
+            isOpened = false;
+            envelope.classList.remove('open');
+            ribbonBtn.classList.remove('untied');
+            instructionText.classList.remove('instruction-hidden');
+            rsvpModal.classList.remove('show');
+            btnDecline.style.position = '';
+            btnDecline.style.left = '';
+            btnDecline.style.top = '';
+        });
+    </script>
 </body>
 </html>
